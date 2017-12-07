@@ -76,7 +76,19 @@ do
 done
 fi
 
+#PlugIns
 
+APP_PLUGINS_PATH="$BUILT_PRODUCTS_DIR/$TARGET_NAME.app/PlugIns"
+if [ -d "$APP_PLUGINS_PATH" ]; then
+for PLUGIN in "$APP_PLUGINS_PATH/"*
+do
+# Sign PLUGIN in ipa
+FILENAME=$(basename $PLUGIN)
+echo "SIGNING: $FILENAME WITH $EXPANDED_CODE_SIGN_IDENTITY"
+
+/usr/bin/codesign --force --sign "$EXPANDED_CODE_SIGN_IDENTITY" "$PLUGIN"
+done
+fi
 
 
 
